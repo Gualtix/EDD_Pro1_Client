@@ -6,11 +6,15 @@
 //QT
 #include <QWidget>
 
+
 //ADT
 
 namespace Ui {
 class Client_Log;
 }
+
+//Local --> class QLocalSocket;
+class QTcpSocket;
 
 class Client_Log : public QWidget
 {
@@ -35,6 +39,9 @@ private slots:
 
 private:
     Ui::Client_Log *ui;
+
+    //Local --> QLocalSocket* mSocket;
+    QTcpSocket* mSocket;
 };
 
 #endif // CLIENT_LOG_H

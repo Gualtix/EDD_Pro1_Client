@@ -4,6 +4,9 @@
 #include "QString"
 #include "mainwindow.h"
 #include "ui_client_log.h"
+//Local --> #include <QLocalSocket>
+#include <QTcpSocket>
+#include <QTextStream>
 
 //ADT
 #include "user_session.h"
@@ -17,6 +20,17 @@ QString User_Session::EMail = "";
 Client_Log::Client_Log(QWidget *parent) : QWidget(parent), ui(new Ui::Client_Log){
 
     ui->setupUi(this);
+    // Local --> mSocket = new QLocalSocket(this);
+    mSocket = new QTcpSocket(this);
+    //Local ---> connect(mSocket, &QLocalSocket::readyRead, [&](){
+    connect(mSocket, &QTcpSocket::readyRead, [&](){
+        QTextStream T(mSocket);
+        //Lectura del Servidor
+
+        ui->tboxEMail->setText(T.readAll());
+    });
+
+
     NewUser_State();
 }
 
@@ -52,6 +66,7 @@ Client_Log::~Client_Log(){
 
 void Client_Log::on_btnPlay_clicked(){
 
+
     MainWindow* w = new MainWindow();
     w->show();
 
@@ -63,6 +78,12 @@ void Client_Log::on_btnRegister_clicked(){
 }
 
 void Client_Log::on_btnNewUser_clicked(){
+    //Local ---> mSocket->connectToServer("Shared_Files_Server");
+
+    //mSocket->connectToHost("190.149.42.96",1234);
+
+    /mSocket->connectToHost("localhost",4328);
+
     Partner_State();
 
 
