@@ -32,7 +32,12 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     client_log.h \
-    user_session.h
+    user_session.h \
+    decoderclient.h \
+    mystring.h \
+    myint.h \
+    genode.h \
+    genlist.h
 
 FORMS += \
         mainwindow.ui \

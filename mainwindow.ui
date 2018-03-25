@@ -18,13 +18,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>10</y>
       <width>641</width>
-      <height>421</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -318,24 +318,6 @@
       <string>Editor de Imagenes</string>
      </attribute>
     </widget>
-   </widget>
-   <widget class="QLabel" name="lblUser">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>181</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Usuario:</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

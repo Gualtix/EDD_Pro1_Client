@@ -6,14 +6,13 @@
 //QT
 #include <QWidget>
 
-
 //ADT
+//#include "decoderclient.h"
 
 namespace Ui {
 class Client_Log;
 }
 
-//Local --> class QLocalSocket;
 class QTcpSocket;
 
 class Client_Log : public QWidget
@@ -37,11 +36,22 @@ private slots:
 
     void on_btnPartner_clicked();
 
+    void socketSend(QString msg);
+
+    void socketReceive();
+
+    void Clean_TextBox();
+
+public:
+    void Log_In_Req(bool Success);
+    void Sign_In_Req(bool Success);
+
+
 private:
     Ui::Client_Log *ui;
 
-    //Local --> QLocalSocket* mSocket;
-    QTcpSocket* mSocket;
+    QTcpSocket* Tcp_Socket_Client;
+    //DecoderClient* decoTools;
 };
 
-#endif // CLIENT_LOG_H
+#endif
