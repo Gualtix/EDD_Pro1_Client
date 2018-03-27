@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    //explicit MainWindow(QWidget *parent,QTcpSocket* Tcp_Socket_Client);
+    //explicit MainWindow(QWidget *parent,QTcpSocket* mSocket_Client);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 

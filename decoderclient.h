@@ -59,21 +59,23 @@ public:
 
             if(Req_Type == "Get_User_Files"){
 
-                int Nm = AnsList->GetNode(1)->Data->Cad.toInt();
+                int Nm = (AnsList->GetNode(1)->Data->Cad.toInt());
                 AnsList->DeleteNode(0);
-                AnsList->DeleteNode(1);
+                AnsList->DeleteNode(0);
 
                 if(Nm > 0){
 
                     int cnt = 0;
                     while(cnt < Nm){
 
-                        QString Nombre = AnsList->GetNode(1 + (cnt))->Data->Cad;
-                        QString Tipo = AnsList->GetNode(2 + (cnt))->Data->Cad;
-                        QString Permiso = AnsList->GetNode(0 + (cnt))->Data->Cad;
-                        QString Fecha = AnsList->GetNode(4 + (cnt))->Data->Cad;
+                        QString Nombre = AnsList->GetNode(1 + (9 * cnt))->Data->Cad;
+                        QString Tipo = AnsList->GetNode(2 + (9 * cnt))->Data->Cad;
+                        QString Permiso = AnsList->GetNode(0 + (9 * cnt))->Data->Cad;
+                        QString Fecha = AnsList->GetNode(4 + (9 * cnt))->Data->Cad;
 
                         frmApp->AddTableItem(cnt,Nombre,Tipo,Permiso,Fecha);
+
+                        cnt++;
                     }
 
                 }
@@ -81,7 +83,6 @@ public:
                     frmApp->Show_Message("Get User Files","El Usuario no dispone de Archivos");
                 }
 
-                //QString Nombre = AnsList->get
             }
             else if(Req_Type == "Get_File_Content"){
 

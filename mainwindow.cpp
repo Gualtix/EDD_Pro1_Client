@@ -14,28 +14,22 @@
 #include "decoderclient.h"
 
 //(^< ............ ............ ............ Constructor: Set
-//MainWindow::MainWindow(QWidget *parent,QTcpSocket* Tcp_Socket_Client) : QMainWindow(parent), ui(new Ui::MainWindow){
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     this->setWindowTitle(User_Session::Nickname);
 
-    //this->Tcp_Socket_Client = Tcp_Socket_Client;
+    //(^< ............ T A B L E
+    ui->tblArchives->setColumnWidth(0,135);
+    ui->tblArchives->setColumnWidth(3,135);
+    ui->tblArchives->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    this->Tcp_Socket_Client = new QTcpSocket(this);
+    //(^< ............ C L I E N T
+    Tcp_Socket_Client = new QTcpSocket(this);
 
-    connect(Tcp_Socket_Client,SIGNAL (readyRead()),this,SLOT (socketReceive()));
     Tcp_Socket_Client->connectToHost(QHostAddress::LocalHost,4328);
-
-
-}
-
-/*
-MainWindow::MainWindow(QTcpSocket* Tcp_Socket_Client) : QMainWindow(parent), ui(new Ui::MainWindow){
-    ui->setupUi(this);
-    this->Tcp_Socket_Client = Tcp_Socket_Client;
+    connect(Tcp_Socket_Client,SIGNAL (readyRead()),this,SLOT (socketReceive()));
 
 }
-*/
 
 
 //(^< ............ ............ ............ Destructor
@@ -59,9 +53,9 @@ MainWindow::~MainWindow(){
 //(^< ............ ............ ............ ............ ............ Canvas
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
-void MainWindow::Load_Canvas(int j, int i){
+//void MainWindow::Load_Canvas(int j, int i){
 
-}
+//}
 
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Form States
@@ -97,7 +91,6 @@ void MainWindow::socketSend(QString msg){
     else{
         QMessageBox::critical(this,"Error","Server is Not Listening");
     }
-
 }
 
 void MainWindow::socketReceive(){
@@ -120,8 +113,7 @@ void MainWindow::socketReceive(){
 
 void MainWindow::on_btnUpdate_clicked()
 {
-    Show_Message("","ASTS");
-    //QMessageBox::information(this,"Tl","msg");
+    ui->tblArchives->setRowCount(0);
     Get_User_Files();
 }
 
@@ -142,6 +134,7 @@ void MainWindow::AddTableItem(int Rk,QString Nombre,QString Tipo,QString Permiso
     ui->tblArchives->setItem(Rk,1,new QTableWidgetItem(Tipo));
     ui->tblArchives->setItem(Rk,2,new QTableWidgetItem(Permiso));
     ui->tblArchives->setItem(Rk,3,new QTableWidgetItem(Fecha));
+
 }
 
 void MainWindow::on_pushButton_clicked()

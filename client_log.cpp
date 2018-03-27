@@ -13,6 +13,7 @@
 #include "ui_client_log.h"
 #include "user_session.h"
 #include "client_log.h"
+#include "QThread"
 
 //Static Storage Definition
 QString User_Session::Nickname = "";
@@ -25,17 +26,22 @@ Client_Log::Client_Log(QWidget *parent) : QWidget(parent), ui(new Ui::Client_Log
 
     ui->setupUi(this);
 
-
-
     Tcp_Socket_Client = new QTcpSocket(this);
 
-    connect(Tcp_Socket_Client,SIGNAL (readyRead()),this,SLOT (socketReceive()));
     Tcp_Socket_Client->connectToHost(QHostAddress::LocalHost,4328);
+    connect(Tcp_Socket_Client,SIGNAL (readyRead()),this,SLOT (socketReceive()));
+
 
     //NewUser_State();
     Partner_State();
     ui->tboxNickname->setText("aniras");
     ui->tboxPassword->setText("62c8ad0a15d9d1ca38d5dee762a16e01");
+
+    //QThread::sleep(10);
+
+   // on_btnPlay_clicked();
+
+
 
 
 }
@@ -154,17 +160,11 @@ void Client_Log::on_btnPartner_clicked(){
 
 void Client_Log::Log_In_Req(bool Success){
     if(Success){
-        QMessageBox::information(this,"Login","Welcome to Shared Files Management");
+        //QMessageBox::information(this,"Login","Welcome to Shared Files Management");
 
         User_Session::Nickname = ui->tboxNickname->text();
         User_Session::Password = ui->tboxPassword->text();
 
-        Tcp_Socket_Client->close();
-        Tcp_Socket_Client->destroyed();
-
-        //delete Tcp_Socket_Client;
-
-        //MainWindow* W = new MainWindow(0,Tcp_Socket_Client);
         MainWindow* W = new MainWindow();
         W->show();
 

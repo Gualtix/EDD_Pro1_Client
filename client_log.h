@@ -51,7 +51,6 @@ private:
     Ui::Client_Log *ui;
 
     QTcpSocket* Tcp_Socket_Client;
-    //DecoderClient* decoTools;
 };
 
 #endif

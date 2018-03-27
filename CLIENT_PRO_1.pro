@@ -37,7 +37,8 @@ HEADERS += \
     mystring.h \
     myint.h \
     genode.h \
-    genlist.h
+    genlist.h \
+    USS/clientworking.h
 
 FORMS += \
         mainwindow.ui \
