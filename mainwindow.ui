@@ -82,7 +82,7 @@
        <string>Crear</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="btnUpdate">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -95,7 +95,7 @@
        <string>Refrescar</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="tblArchives">
       <property name="geometry">
        <rect>
         <x>125</x>
@@ -104,6 +104,26 @@
         <height>191</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string>Nombre</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tipo</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Permiso</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Fecha de Creacion</string>
+       </property>
+      </column>
      </widget>
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">

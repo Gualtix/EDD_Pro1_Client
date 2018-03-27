@@ -7,7 +7,7 @@
 #include <QWidget>
 
 //ADT
-//#include "decoderclient.h"
+
 
 namespace Ui {
 class Client_Log;

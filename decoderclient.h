@@ -7,6 +7,7 @@
 
 //ADT
 #include "client_log.h"
+#include "mainwindow.h"
 #include "genlist.h"
 #include "mystring.h"
 
@@ -16,9 +17,14 @@ public:
 
     GenList<MyString*>* AnsList;
 
+    //(^< ............ ............ ............ Constructor: Default
     DecoderClient(){
         AnsList = new GenList<MyString*>();
     }
+
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
+    //(^< ............ ............ ............ ............ ............ Tools
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
     void GetStack_of_Answers(QString msg){
 
@@ -41,6 +47,64 @@ public:
         }
     }
 
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
+    //(^< ............ ............ ............ ............ ............ App
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
+
+    void Answer_Request(MainWindow* frmApp){
+
+        if(AnsList->ListSize > 0){
+
+            QString Req_Type = AnsList->First->Data->Cad;
+
+            if(Req_Type == "Get_User_Files"){
+
+                int Nm = AnsList->GetNode(1)->Data->Cad.toInt();
+                AnsList->DeleteNode(0);
+                AnsList->DeleteNode(1);
+
+                if(Nm > 0){
+
+                    int cnt = 0;
+                    while(cnt < Nm){
+
+                        QString Nombre = AnsList->GetNode(1 + (cnt))->Data->Cad;
+                        QString Tipo = AnsList->GetNode(2 + (cnt))->Data->Cad;
+                        QString Permiso = AnsList->GetNode(0 + (cnt))->Data->Cad;
+                        QString Fecha = AnsList->GetNode(4 + (cnt))->Data->Cad;
+
+                        frmApp->AddTableItem(cnt,Nombre,Tipo,Permiso,Fecha);
+                    }
+
+                }
+                else{
+                    frmApp->Show_Message("Get User Files","El Usuario no dispone de Archivos");
+                }
+
+                //QString Nombre = AnsList->get
+            }
+            else if(Req_Type == "Get_File_Content"){
+
+            }
+            else if(Req_Type == "Create_File"){
+
+            }
+            else if(Req_Type == "Block_File"){
+
+            }
+            else if(Req_Type == "Release_File"){
+
+            }
+            else if(Req_Type == "Save_File"){
+
+            }
+        }
+
+    }
+
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
+    //(^< ............ ............ ............ ............ ............ Login
+    //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
     void Answer_Request(Client_Log* frmLogin){
 
@@ -71,37 +135,8 @@ public:
                 return;
 
             }
-            else if(Req_Type == "Get_User_Files"){
-
-            }
-            else if(Req_Type == "Get_File_Content"){
-
-            }
-            else if(Req_Type == "Create_File"){
-
-            }
-            else if(Req_Type == "Block_File"){
-
-            }
-            else if(Req_Type == "Release_File"){
-
-            }
-            else if(Req_Type == "Save_File"){
-
-            }
         }
     }
-
-    bool Log_In(){
-
-
-    }
-
-    bool Sign_In(){
-
-    }
-
-
 };
 
 #endif // DECODERCLIENT_H
