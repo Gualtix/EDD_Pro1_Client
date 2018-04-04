@@ -114,6 +114,18 @@ public:
         return NULL;
     }
 
+    //(^< ............ ............ ............ Eliminar Nodo por Nickname
+    bool DeleteNode_By_Nickname(QString Nick){
+
+        GeNode<T>* TG = GetNode_By_Nickname(Nick);
+        if(TG != NULL){
+            int index = TG->CORREL;
+            DeleteNode(index);
+            return true;
+        }
+        return false;
+    }
+
     //(^< ............ ............ ............ Insertar en Indice Especifico
     bool InsertAt(int index,T Dt){
         if(index >= 0 && index <= this->ListSize){
@@ -188,6 +200,14 @@ public:
             return true;
         }
         return false;
+    }
+
+    //(^< ............ ............ ............ Clear List
+    void Clear_List(){
+        int cnt = 0;
+        while(this->ListSize > 0){
+            DeleteNode(0);
+        }
     }
 
     //(^< ............ ............ ............ GetFirst

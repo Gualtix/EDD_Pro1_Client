@@ -27,7 +27,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    client_log.cpp
+    client_log.cpp \
+    asklimits.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,10 +39,13 @@ HEADERS += \
     myint.h \
     genode.h \
     genlist.h \
-    USS/clientworking.h
+    USS/clientworking.h \
+    Canvas/wbutton.h \
+    asklimits.h
 
 FORMS += \
         mainwindow.ui \
-    client_log.ui
+    client_log.ui \
+    asklimits.ui
 
 QMAKE_CXXFLAGS += -std=gnu++11

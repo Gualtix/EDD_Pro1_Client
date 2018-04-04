@@ -33,9 +33,12 @@ Client_Log::Client_Log(QWidget *parent) : QWidget(parent), ui(new Ui::Client_Log
 
 
     //NewUser_State();
+
+
     Partner_State();
     ui->tboxNickname->setText("aniras");
     ui->tboxPassword->setText("62c8ad0a15d9d1ca38d5dee762a16e01");
+
 
     //QThread::sleep(10);
 
@@ -178,7 +181,10 @@ void Client_Log::Log_In_Req(bool Success){
 
 void Client_Log::Sign_In_Req(bool Success){
     if(Success){
+
         QMessageBox::information(this,"Sign in","New User Successfuly Registered");
+
+
 
         User_Session::Nickname = ui->tboxNickname->text();
         User_Session::Password = ui->tboxPassword->text();
@@ -186,7 +192,9 @@ void Client_Log::Sign_In_Req(bool Success){
         User_Session::EMail = ui->tboxEMail->text();
 
         Partner_State();
-        ui->tboxName->setText(User_Session::Nickname);
+
+        ui->tboxNickname->setText(User_Session::Nickname);
+        ui->tboxPassword->setText(User_Session::Password);
 
     }
     else{

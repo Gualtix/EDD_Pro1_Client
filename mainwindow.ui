@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>674</width>
-    <height>484</height>
+    <width>700</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="tabManager">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>641</width>
-      <height>441</height>
+      <x>0</x>
+      <y>0</y>
+      <width>691</width>
+      <height>711</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -28,22 +28,22 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Mis Archivos</string>
+      <string>Administrador</string>
      </attribute>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btnArchRegis">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>170</y>
+        <y>90</y>
         <width>111</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Cerrar Sesion</string>
+       <string>Registrar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btnDelete">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -56,20 +56,7 @@
        <string>Eliminar</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>90</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Editar</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="btnNew">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -79,7 +66,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Crear</string>
+       <string>Nuevo Archivo</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btnUpdate">
@@ -92,7 +79,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Refrescar</string>
+       <string>Cargar Lista</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="tblArchives">
@@ -100,8 +87,8 @@
        <rect>
         <x>125</x>
         <y>10</y>
-        <width>501</width>
-        <height>191</height>
+        <width>531</width>
+        <height>201</height>
        </rect>
       </property>
       <column>
@@ -125,146 +112,533 @@
        </property>
       </column>
      </widget>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="gboxArchInfo">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>210</y>
-        <width>621</width>
-        <height>171</height>
+        <width>641</width>
+        <height>251</height>
        </rect>
       </property>
       <property name="title">
-       <string>Panel de Control</string>
+       <string>Detalles</string>
       </property>
       <widget class="QLabel" name="lblUser_4">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>150</y>
          <width>101</width>
          <height>17</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>15</pointsize>
+         <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
         <string>Permiso:</string>
        </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="geometry">
-        <rect>
-         <x>130</x>
-         <y>40</y>
-         <width>481</width>
-         <height>25</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_3">
-       <property name="geometry">
-        <rect>
-         <x>470</x>
-         <y>120</y>
-         <width>113</width>
-         <height>25</height>
-        </rect>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="lblUser_5">
        <property name="geometry">
         <rect>
-         <x>340</x>
-         <y>70</y>
-         <width>191</width>
-         <height>17</height>
+         <x>440</x>
+         <y>30</y>
+         <width>91</width>
+         <height>20</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>15</pointsize>
+         <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Fecha de Creacion:</string>
+        <string>Creado:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="lblUser_2">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
-         <width>101</width>
+         <y>30</y>
+         <width>81</width>
          <height>17</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>15</pointsize>
+         <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
         <string>Nombre:</string>
        </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_2">
-       <property name="geometry">
-        <rect>
-         <x>132</x>
-         <y>70</y>
-         <width>131</width>
-         <height>25</height>
-        </rect>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="lblUser_3">
        <property name="geometry">
         <rect>
-         <x>260</x>
-         <y>130</y>
-         <width>101</width>
+         <x>440</x>
+         <y>90</y>
+         <width>71</width>
          <height>17</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>15</pointsize>
+         <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
         <string>Tipo:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
       </widget>
       <widget class="QLabel" name="lblUser_6">
        <property name="geometry">
         <rect>
-         <x>80</x>
-         <y>130</y>
+         <x>220</x>
+         <y>150</y>
+         <width>81</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Estado:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboxPermiso">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>170</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Ver</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Editar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dueño</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="lblUser_7">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>30</y>
+         <width>81</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Creador:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblUser_8">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>90</y>
+         <width>111</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Modificado:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblUser_9">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>200</y>
+         <width>51</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>URL:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboxEstado">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>170</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Disponible</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bloqueado</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="lblUser_10">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>121</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Modificador:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxURL">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>220</y>
+         <width>401</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxNombre">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxCreador">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>50</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxCreado">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>50</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxModificador">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxModificado">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>110</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboxTipo">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>110</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Lienzo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Documento</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Presentacion</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="btnFetch_JSon">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>220</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cargar JSon</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="gboxPermisos">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>470</y>
+        <width>421</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Asignacion de Permisos</string>
+      </property>
+      <widget class="QTableWidget" name="tblPermisos">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>30</y>
+         <width>211</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <column>
+        <property name="text">
+         <string>Usuario</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Permiso</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QPushButton" name="btnAddPermiso">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>181</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Agregar</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblUser_11">
+       <property name="geometry">
+        <rect>
+         <x>-10</x>
+         <y>30</y>
          <width>101</width>
          <height>17</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>15</pointsize>
+         <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Estado:</string>
+        <string>Usuario:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QLabel" name="lblUser_12">
        <property name="geometry">
         <rect>
-         <x>380</x>
-         <y>120</y>
-         <width>131</width>
+         <x>-10</x>
+         <y>90</y>
+         <width>101</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Permiso:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboxPerm">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>181</width>
          <height>25</height>
         </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Ver</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Editar</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="comboxUS_AV">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>181</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="gboxActios">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>470</y>
+        <width>211</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Acciones</string>
+      </property>
+      <widget class="QPushButton" name="btnChangePermisos">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Actualizar Permisos</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnUseEditor">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Usar Editor</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnViewPDF">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>191</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Visualizar</string>
        </property>
       </widget>
      </widget>
@@ -327,16 +701,419 @@
        <string>PushButton</string>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>621</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Contenido-JSon</string>
+      </property>
+      <widget class="QTextEdit" name="textEdit_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>601</width>
+         <height>171</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
       <string>Editor de Presentaciones</string>
      </attribute>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>621</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Contenido-JSon</string>
+      </property>
+      <widget class="QTextEdit" name="textEdit_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>601</width>
+         <height>171</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
       <string>Editor de Imagenes</string>
      </attribute>
+     <widget class="QGroupBox" name="gboxCanvas_Preview">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>260</y>
+        <width>661</width>
+        <height>411</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Vista Previa</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="gboxEdit">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>661</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Editor</string>
+      </property>
+      <widget class="QListWidget" name="listActions">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>161</width>
+         <height>211</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnPushBlock">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>120</y>
+         <width>301</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Pintar Bloque</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxSup_Fl">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>60</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxSup_Cl">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>90</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxInf_Fl">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>60</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxInf_Cl">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>90</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>30</y>
+         <width>141</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Esquina Superior</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>30</y>
+         <width>131</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Esquina Inferior</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>60</y>
+         <width>31</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fila</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>90</y>
+         <width>71</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Columna</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnPushSingle">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>210</y>
+         <width>301</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Pintar Pixel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>60</y>
+         <width>31</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fila</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>90</y>
+         <width>71</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Columna</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>180</y>
+         <width>71</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Columna</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxFila">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>180</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoxColumna">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>180</y>
+         <width>45</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>180</y>
+         <width>31</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fila</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tboxColor">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>120</y>
+         <width>151</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>100</y>
+         <width>51</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Color:</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="tboxLoad">
+       <property name="geometry">
+        <rect>
+         <x>499</x>
+         <y>50</y>
+         <width>151</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnRender">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>180</y>
+         <width>151</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>R E N D E R</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnSaveCanvas">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>210</y>
+         <width>151</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Guardar Lienzo</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -345,11 +1122,23 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>674</width>
+     <width>700</width>
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuCerrar_Sesion">
+    <property name="title">
+     <string>Sesion</string>
+    </property>
+    <addaction name="actionLog_Out"/>
+   </widget>
+   <addaction name="menuCerrar_Sesion"/>
   </widget>
+  <action name="actionLog_Out">
+   <property name="text">
+    <string>Log Out</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

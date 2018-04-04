@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     //MainWindow* w = new MainWindow();
     //w->show();
 
+
+
     Client_Log* CL = new Client_Log();
 
     CL->show();
