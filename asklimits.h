@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "Canvas/wbutton.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class AskLimits;
@@ -14,11 +15,15 @@ class AskLimits : public QDialog
 
 public:
     //explicit AskLimits(QWidget *parent = 0);
-    explicit AskLimits(QWidget *parent,ArrayRange* I,ArrayRange* J);
+    explicit AskLimits(QWidget *parent,MainWindow* frmApp,QString FlName);
     ~AskLimits();
 
 private slots:
     void on_buttonBox_accepted();
+
+public:
+    MainWindow* App;
+    QString Name;
 
 private:
     Ui::AskLimits *ui;

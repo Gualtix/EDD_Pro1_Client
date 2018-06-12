@@ -101,10 +101,12 @@ public:
                 }
 
             }
+
+            /*
             else if(Req_Type == "Get_File_Content"){
 
                 //QString Req_Type = AnsList->GetNode(0)->Data->Cad;
-                QString Ans_Type = AnsList->GetNode(1)->Data->Cad;
+                QString Ans_Type = AnsList->GetNode(3)->Data->Cad;
 
                 if(Ans_Type == "SUCCESS"){
                     frmApp->Artist->Get_Archive_By_Name(frmApp->Artist->Selected_Archive)->Data->Server_JSonContent = AnsList->GetNode(3)->Data->Cad;
@@ -114,6 +116,8 @@ public:
                     frmApp->Show_Message("Critical","Get JSon Content","La Direccion URL NO es Valida");
                 }
             }
+            */
+
             else if(Req_Type == "Get_Available_Users"){
 
                 frmApp->NickList->Clear_List();
@@ -141,6 +145,77 @@ public:
             else if(Req_Type == "Delete_File"){
                 //frmApp->Show_Message("Info","Archive Manager","Archivo Eliminado Exitosamente");
                 //return;
+            }
+
+            else if(Req_Type == "Get_File_Content"){
+                QString Fln = AnsList->GetNode(1)->Data->Cad;
+                QString Usn = AnsList->GetNode(2)->Data->Cad;
+                QString Aws = AnsList->GetNode(3)->Data->Cad;
+                QString Js_Content = "";
+
+                QString Order;
+                QString Type;
+
+                if(Aws != "ERROR"){
+                    Js_Content = AnsList->GetNode(4)->Data->Cad;
+                    Js_Content.replace("^","#");
+
+                    Order = AnsList->GetNode(5)->Data->Cad;
+                    Type = AnsList->GetNode(6)->Data->Cad;
+                }
+
+                //(^< ............ Archivo No Encontrado
+                if(Aws == "ERROR"){
+                    frmApp->Load_Editor("ERROR",Order,Type);
+                }
+                //(^< ............ Archivo con Instrucciones
+                else if(Js_Content != "Empty"){
+
+                    //(^< ............ L I E N Z O
+                    if(Type == "Lienzo"){
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Server_JSonContent = Js_Content;
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Cnv->Original_JSonContent = Js_Content;
+                    }
+
+                    //(^< ............ D O C U M E N T O
+                    if(Type == "Documento"){
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Server_JSonContent = Js_Content;
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Dc->Original_JSonContent = Js_Content;
+                    }
+
+                    //(^< ............ P R E S E N T A C I O N
+                    if(Type == "Presentacion"){
+
+                    }
+
+
+                    frmApp->Load_Editor("SUCCESS",Order,Type);
+
+
+                }
+                //(^< ............ Archivo Vacio
+                else{
+
+                    //(^< ............ L I E N Z O
+                    if(Type == "Lienzo"){
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Server_JSonContent = "Empty";
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Cnv->Original_JSonContent = "Empty";
+                    }
+
+                    //(^< ............ D O C U M E N T O
+                    if(Type == "Documento"){
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Server_JSonContent = "Empty";
+                        frmApp->Artist->Get_Archive_By_Name(Fln)->Data->Dc->Original_JSonContent = "Empty";
+                    }
+
+                    //(^< ............ P R E S E N T A C I O N
+                    if(Type == "Presentacion"){
+
+                    }
+
+                    frmApp->Load_Editor("Empty",Order,Type);
+
+                }
             }
 
             else if(Req_Type == "Create_File"){
@@ -178,18 +253,14 @@ public:
                 }
             }
 
-
-
-
-
-
-
             else if(Req_Type == "Block_File"){
 
             }
+
             else if(Req_Type == "Release_File"){
 
             }
+
             else if(Req_Type == "Save_File"){
 
             }

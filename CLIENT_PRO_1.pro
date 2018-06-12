@@ -6,6 +6,7 @@
 
 QT += core gui
 QT += network
+QT += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +42,8 @@ HEADERS += \
     genlist.h \
     USS/clientworking.h \
     Canvas/wbutton.h \
-    asklimits.h
+    asklimits.h \
+    Tree/gentree.h
 
 FORMS += \
         mainwindow.ui \

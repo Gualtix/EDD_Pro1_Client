@@ -23,11 +23,14 @@ public:
     //(^< ............ ............ ............ Constructor: Default NULL
     GenList(){
         this->ListSize = 0;
-        this->First = Last = NULL;
+        this->First = NULL;
+        this->Last = NULL;
+        //this->First = Last = NULL;
     }
 
     //(^< ............ ............ ............ InsertWhenEmpty
     bool InsertWhenEmpty(T Dt){
+
         if(ListSize == 0){
             this->First = Last = new GeNode<T>(Dt);
             this->ListSize++;

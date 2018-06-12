@@ -36,8 +36,8 @@ Client_Log::Client_Log(QWidget *parent) : QWidget(parent), ui(new Ui::Client_Log
 
 
     Partner_State();
-    ui->tboxNickname->setText("aniras");
-    ui->tboxPassword->setText("62c8ad0a15d9d1ca38d5dee762a16e01");
+    //ui->tboxNickname->setText("aniras");
+    //ui->tboxPassword->setText("62c8ad0a15d9d1ca38d5dee762a16e01");
 
 
     //QThread::sleep(10);

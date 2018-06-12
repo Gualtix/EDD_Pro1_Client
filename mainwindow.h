@@ -6,6 +6,7 @@
 //Qt
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include <QListWidgetItem>
 
 //ADT
 #include "USS/clientworking.h"
@@ -55,6 +56,8 @@ public:
 
     void Fill_Combox_Users();
 
+    void Get_File_Content(QString Archive_Name,QString JSon_URL,QString Order,QString Type);
+
     void AddTable_US_Item(int Rk,QString Nombre,QString Permiso);
 
     //void Fill_Combox_Users_With_Exception(QString Rp);
@@ -81,6 +84,31 @@ public:
 
     void Update_Permission(QString Archive_Name);
 
+    void DocEdit_FirstUse();
+
+    void Parragraph_State();
+
+    void Image_State();
+
+    void Vinieta_State();
+
+    void Clean_DocEdit();
+
+    void Load_Editor(QString Cs,QString Order,QString Type);
+
+    void StartCanvas(bool FirstDraw,QString Order);
+
+    void StartDoc(bool FirstDoc,QString Order);
+
+    void StartPresentation(bool FistPres);
+
+    void Load_Canvas(ArrayRange* J,ArrayRange* I,bool FirstDraw);
+
+    void Save_File(QString Archive_Name,QString JSon_URL,QString JSon_Content);
+
+    void Clean_Canvas();
+
+    void Load_Doc();
 
 private slots:
 
@@ -102,7 +130,6 @@ private slots:
 
     void on_tboxLoad_clicked();
 
-    void Load_Canvas(ArrayRange* J,ArrayRange* I);
     //void Load_Canvas();
 
     void on_btnRender_clicked();
@@ -129,6 +156,45 @@ private slots:
 
     void on_btnChangePermisos_clicked();
 
+    void on_btnIMG_clicked();
+
+    void on_btnPR_clicked();
+
+    void on_btnVIN_clicked();
+
+    void on_tboxVin_returnPressed();
+
+    void on_listboxVin_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_btnDirIMG_clicked();
+
+    void on_btnADD_clicked();
+
+    void on_btnPDF_clicked();
+
+    void on_btnTreeIMG_clicked();
+
+    void on_tvDocTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_btnUseEditor_clicked();
+
+    void on_btnViewPDF_clicked();
+
+
+    void on_tboxColor_returnPressed();
+
+    void on_btnUP_clicked();
+
+    void on_btnDeleteNode_clicked();
+
+    void on_btnAddSubsection_clicked();
+
+    void on_btnSaveDoc_clicked();
+
+    void on_btnDEL_clicked();
+
+    void on_actionLog_Out_triggered();
+
 public:
     Ui::MainWindow *ui;
     QTcpSocket* Tcp_Socket_Client;
@@ -137,6 +203,8 @@ public:
     GenList<MyString*>* NickList;
     GenList<MyString*>* Erasable_NickList;
     GenList<MyString*>* PList;
+
+    TNode* SelectedNode;
 };
 
 #endif // MAINWINDOW_H

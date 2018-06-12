@@ -112,6 +112,12 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="minimum">
+     <number>-100</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
    </widget>
    <widget class="QSpinBox" name="spinBox_I_Desde">
     <property name="geometry">
@@ -121,6 +127,12 @@
       <width>45</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="minimum">
+     <number>-100</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_13">
@@ -151,6 +163,12 @@
       <width>45</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="minimum">
+     <number>-100</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_14">
@@ -203,6 +221,12 @@
       <width>45</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="minimum">
+     <number>-100</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
     </property>
    </widget>
   </widget>

@@ -7,6 +7,8 @@
 #include <QHostAddress>
 #include <QMessageBox>
 #include <QDate>
+#include <QMessageBox>
+#include <QFileDialog>
 
 //ADT
 #include "mainwindow.h"
@@ -57,7 +59,15 @@ MainWindow::~MainWindow(){
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
 void MainWindow::MainWindow_FirstUse(){
+
+    ui->tabManager->setTabEnabled(3,false);
+    ui->tabManager->setTabEnabled(2,false);
+    ui->tabManager->setTabEnabled(1,false);
+    ui->tabManager->setTabEnabled(0,true);
+    ui->tabManager->setCurrentIndex(0);
+
     Archive_Manager_FirstUse();
+    DocEdit_FirstUse();
 }
 
 void MainWindow::Archive_Manager_FirstUse(){
@@ -203,6 +213,72 @@ void MainWindow::Viewer_State(QString Arch_Type){
 
 }
 
+void MainWindow::DocEdit_FirstUse(){
+
+    ui->tvDocTree->header()->resizeSection(0,200);
+
+    //(^< ............ ............ ............ DocEmulator
+    //Doc_Emu = new DocumentHandle();
+    //Doc_Emu->Arbolito->Set_TreeView(ui->tvDocTree);
+
+    ui->btnADD->setEnabled(true);
+    ui->btnUP->setEnabled(false);
+    ui->btnDEL->setEnabled(false);
+
+    ui->btnAddSubsection->setEnabled(false);
+    ui->btnDeleteNode->setEnabled(false);
+
+    Parragraph_State();
+}
+
+void MainWindow::Parragraph_State(){
+
+    Clean_DocEdit();
+
+    ui->btnPR->setEnabled(false);
+    ui->btnIMG->setEnabled(true);
+    ui->btnVIN->setEnabled(true);
+    ui->tboxTitle->setEnabled(true);
+    ui->tboxContent->setEnabled(true);
+    ui->tboxContent->setReadOnly(false);
+    ui->listboxVin->setEnabled(false);
+    ui->tboxVin->setEnabled(false);
+    ui->tboxIMG->setEnabled(false);
+    ui->btnDirIMG->setEnabled(false);
+}
+
+void MainWindow::Image_State(){
+
+    Clean_DocEdit();
+
+    ui->btnPR->setEnabled(true);
+    ui->btnIMG->setEnabled(false);
+    ui->btnVIN->setEnabled(true);
+    ui->tboxTitle->setEnabled(true);
+    ui->tboxContent->setEnabled(true);
+    ui->tboxContent->setReadOnly(true);
+    ui->listboxVin->setEnabled(false);
+    ui->tboxVin->setEnabled(false);
+    ui->tboxIMG->setEnabled(true);
+    ui->btnDirIMG->setEnabled(true);
+
+}
+
+void MainWindow::Vinieta_State(){
+
+    Clean_DocEdit();
+
+    ui->btnPR->setEnabled(true);
+    ui->btnIMG->setEnabled(true);
+    ui->btnVIN->setEnabled(false);
+    ui->tboxTitle->setEnabled(true);
+    ui->tboxContent->setEnabled(false);
+    ui->listboxVin->setEnabled(true);
+    ui->tboxVin->setEnabled(true);
+    ui->tboxIMG->setEnabled(false);
+    ui->btnDirIMG->setEnabled(false);
+}
+
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Clean
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
@@ -229,20 +305,118 @@ void MainWindow::Clean_Archive_Manager(){
     ui->tblArchives->setRowCount(0);
     ui->tblPermisos->setRowCount(0);
 }
+
+void MainWindow::Clean_DocEdit(){
+    //ui->tvDocTree->clear();
+    ui->listboxVin->clear();
+
+    ui->tboxTitle->setText("");
+    ui->tboxContent->setText("");
+    ui->tboxIMG->setText("");
+    ui->tboxVin->setText("");
+    ui->tboxJSonDocEdit->setText("");
+
+
+
+}
+
+void MainWindow::Clean_Canvas(){
+    QString FlName = ui->tboxNombre->text();
+    CanvasHadle * Fl = Artist->Get_Archive_By_Name(FlName)->Data->Cnv;
+
+    Artist->Get_Archive_By_Name(FlName)->Data->Cnv->Remove_WButtons();
+    Artist->Get_Archive_By_Name(FlName)->Data->Cnv->Btn_List->Clear_List();
+    foreach (QObject* OB, ui->gboxCanvas_Preview->children()) {
+        WButton* Bt = (WButton*)OB;
+        delete Bt;
+    }
+    ui->listActions->clear();
+
+}
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Document
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
+
+
+void MainWindow::Load_Doc(){
+    //QString FlName = ui->tboxNombre->text();
+    //GeNode<ArchiveHandle*>* Fl = Artist->Get_Archive_By_Name(FlName);
+
+}
+
+void MainWindow::StartDoc(bool FirstDoc,QString Order){
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    Doc_Emu->Arbolito->Set_TreeView(ui->tvDocTree);
+    QString JS_Content = Doc_Emu->Original_JSonContent;
+    SelectedNode = NULL;
+
+    if(FirstDoc){
+        ui->tabManager->setTabEnabled(0,false);
+        ui->tabManager->setTabEnabled(1,true);
+        ui->tabManager->setCurrentIndex(1);
+    }
+    else{
+        Doc_Emu->Arbolito->JSon_Tree_Load(JS_Content);
+
+        if(Order != "View"){
+            ui->tabManager->setTabEnabled(0,false);
+            ui->tabManager->setTabEnabled(1,true);
+            ui->tabManager->setCurrentIndex(1);
+            Doc_Emu->Arbolito->UpdateTreeView();
+        }
+        else{
+            Doc_Emu->GeneratePDF();
+            Doc_Emu->Arbolito->GraphTree();
+        }
+    }
+}
+
+
 
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Presentation
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
+void MainWindow::StartPresentation(bool FistPres){
+
+}
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Canvas
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 
-void MainWindow::Load_Canvas(ArrayRange* I,ArrayRange* J){
-//void MainWindow::Load_Canvas(){
+void MainWindow::Load_Canvas(ArrayRange* I,ArrayRange* J,bool FirstDraw){
+
+    QString FlName = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* Fl = Artist->Get_Archive_By_Name(FlName);
+
+    if(FirstDraw){
+        ArrayRange* Itt = new ArrayRange(I->Low,I->Sup);
+        ArrayRange* Jtt = new ArrayRange(J->Low,J->Sup);
+
+        Itt->SetSize();
+        Jtt->SetSize();
+
+        I = Itt;
+        J = Jtt;
+
+        //QString FlName = ui->tboxNombre->text();
+        //GeNode<ArchiveHandle*>* Fl = Artist->Get_Archive_By_Name(FlName);
+        Fl->Data->Cnv->SetCanvasLimits(I->Low,I->Sup,J->Low,J->Sup);
+    }
+    else{
+
+        I = Fl->Data->Cnv->I;
+        J = Fl->Data->Cnv->J;
+
+        I->SetSize();
+        J->SetSize();
+    }
+
+
+
     ui->tboxColor->setText("#cc0099");
 
     //(^< ............ C O N T R O L S
@@ -361,7 +535,7 @@ void MainWindow::Load_Canvas(ArrayRange* I,ArrayRange* J){
 
         //Artist->Selected_Archive = "MarioBros";
         //Artist->ArchList->GetNode_By_String(Artist->Selected_Archive)->Data->Cnv->Btn_List->EndInsert(MyButton);
-        Artist->Get_Archive_By_Name("MarioBros")->Data->Cnv->Btn_List->EndInsert(MyButton);
+        Artist->Get_Archive_By_Name(FlName)->Data->Cnv->Btn_List->EndInsert(MyButton);
 
 
         Loc++;
@@ -371,6 +545,49 @@ void MainWindow::Load_Canvas(ArrayRange* I,ArrayRange* J){
 void MainWindow::Pick_Color(){
     WButton *Bt = (WButton *)sender();
     ui->tboxColor->setText(Bt->Current_Color);
+}
+
+void MainWindow::StartCanvas(bool FirstDraw,QString Order){
+    if(FirstDraw){
+
+
+        QString Fl_Name = ui->tboxNombre->text();
+        AskLimits* Ak = new AskLimits(0,this,Fl_Name);
+
+        ui->tabManager->setTabEnabled(3, false);
+        ui->tabManager->setTabEnabled(0,false);
+        ui->tabManager->setCurrentIndex(3);
+        bool Rs = Ak->exec();
+
+        if(Rs == QDialog::Accepted){
+            ui->tabManager->setTabEnabled(3,true);
+        }
+        else{
+            ui->tabManager->setTabEnabled(0,true);
+            ui->tabManager->setCurrentIndex(0);
+        }
+
+
+    }
+    else{
+
+        QString FlName = ui->tboxNombre->text();
+        Artist->Get_Archive_By_Name(FlName)->Data->Cnv->LoadFrom_JSon(false);
+        Load_Canvas(NULL,NULL,false);
+        Artist->Get_Archive_By_Name(FlName)->Data->Cnv->LoadFrom_JSon(true);
+
+        if(Order != "View"){
+            ui->tabManager->setTabEnabled(0,false);
+            ui->tabManager->setTabEnabled(3,true);
+            ui->tabManager->setCurrentIndex(3);
+        }
+        else{
+            QString FlName = ui->tboxNombre->text();
+            GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name(FlName);
+            WFile->Data->Cnv->Render();
+            Clean_Canvas();
+        }
+    }
 }
 
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
@@ -518,6 +735,50 @@ void MainWindow::Update_Permission(QString Archive_Name){
 
     socketSend(Reqest);
 }
+
+void MainWindow::Get_File_Content(QString Archive_Name,QString JSon_URL,QString Order,QString Type){
+
+    QString Reqest = "Get_File_Content";
+    Reqest.append("#");
+
+    Reqest.append(User_Session::Nickname);
+    Reqest.append("#");
+
+    Reqest.append(Archive_Name);
+    Reqest.append("#");
+
+    Reqest.append(JSon_URL);
+    Reqest.append("#");
+
+    Reqest.append(Order);
+    Reqest.append("#");
+
+    Reqest.append(Type);
+    Reqest.append("#");
+
+    socketSend(Reqest);
+
+}
+
+void MainWindow::Save_File(QString Archive_Name,QString JSon_URL,QString JSon_Content){
+    QString Reqest = "Save_File";
+
+    Reqest.append("#");
+
+    Reqest.append(User_Session::Nickname);
+    Reqest.append("#");
+
+    Reqest.append(Archive_Name);
+    Reqest.append("#");
+
+    Reqest.append(JSon_URL);
+    Reqest.append("#");
+
+    Reqest.append(JSon_Content);
+    Reqest.append("#");
+
+    socketSend(Reqest);
+}
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ Sockets Handle
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
@@ -659,6 +920,65 @@ void MainWindow::Update_Archives_Table(){
     Get_User_Files();
 }
 
+void MainWindow::Load_Editor(QString Cs,QString Order,QString Type){
+    QString Tp = ui->comboxTipo->currentText();
+
+    //(^< ............ ............ ............ E M P T Y
+    if(Cs == "Empty"){
+        Show_Message("Info","Carga de Contenido JSon","Nuevo Archivo Cargado Correctamente");
+
+        if(Tp == "Lienzo"){
+            if(Order == "View"){
+                Show_Message("Info","Carga de Contenido JSon","El Lienzo esta Vacio, nada que mostrar...");
+            }
+            else{
+                StartCanvas(true,Order);
+            }
+        }
+        else if(Tp == "Documento"){
+            if(Order == "View"){
+                Show_Message("Info","Carga de Contenido JSon","El Documento esta Vacio, sin PDF que mostrar...");
+            }
+            else{
+                StartDoc(true,Order);
+            }
+
+        }
+        else{
+            if(Order == "View"){
+                Show_Message("Info","Carga de Contenido JSon","La Presentacion esta Vacia, sin PDF que mostrar...");
+            }
+            else{
+                StartPresentation(true);
+            }
+        }
+    }
+
+    //(^< ............ ............ ............ E R R O R : 4 0 4
+    else if(Cs == "ERROR"){
+        Show_Message("Critical","Carga de Contenido JSon","El Archivo NO fue Encontrado");
+    }
+
+    //(^< ............ ............ ............ S U C C E S S
+    else if(Cs == "SUCCESS"){
+        Show_Message("Info","Carga de Contenido JSon","Archivo Cargado Correctamente");
+
+        if(Tp == "Lienzo"){
+            StartCanvas(false,Order);
+        }
+        else if(Tp == "Documento"){
+            StartDoc(false,Order);
+        }
+        else{
+            StartPresentation(false);
+        }
+    }
+}
+
+
+
+
+
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
 //(^< ............ ............ ............ ............ ............ ui Events
 //(^< ............ ............ ............ ............ ............ ............ ............ ............ ............ ............
@@ -666,6 +986,7 @@ void MainWindow::Update_Archives_Table(){
 void MainWindow::on_btnUpdate_clicked(){
 
     Update_Archives_Table();
+    ui->btnUpdate->setEnabled(false);
     //Update_Archives_Table();
     //ui->btnUpdate->setEnabled(false);
     //QMessageBox::information(this,"Tl","msg");
@@ -716,6 +1037,8 @@ void MainWindow::on_btnNew_clicked(){
 
 void MainWindow::on_btnPushSingle_clicked()
 {
+
+    QString FlName = ui->tboxNombre->text();
     QString Fl =  QString::number(ui->spinBoxFila->value());
     QString Cl =  QString::number(ui->spinBoxColumna->value());
 
@@ -732,7 +1055,7 @@ void MainWindow::on_btnPushSingle_clicked()
     if(New_Ins != Last_Inst){
 
         ui->listActions->insertItem(0,New_Ins);
-        GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name("MarioBros");
+        GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name(FlName);
         WFile->Data->Cnv->Paint_Pixel(Color,ui->spinBoxFila->value(),ui->spinBoxColumna->value());
 
         WFile->Data->Cnv->Insert_Single_Paint_Instruction(Color,Fl,Cl);
@@ -741,6 +1064,8 @@ void MainWindow::on_btnPushSingle_clicked()
 
 void MainWindow::on_btnPushBlock_clicked()
 {
+
+    QString FlName = ui->tboxNombre->text();
 
     QString Sup_Fl =  QString::number(ui->spinBoxSup_Fl->value());
     QString Sup_Cl =  QString::number(ui->spinBoxSup_Cl->value());
@@ -767,7 +1092,7 @@ void MainWindow::on_btnPushBlock_clicked()
         int LP_i = Inf_Fl.toInt();
         int LP_j = Inf_Cl.toInt();
 
-        GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name("MarioBros");
+        GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name(FlName);
         WFile->Data->Cnv->Paint_Block(Color,HP_i,HP_j,LP_i,LP_j);
         WFile->Data->Cnv->Insert_Block_Paint_Instruction(Color,Sup_Fl,Sup_Cl,Inf_Fl,Inf_Cl);
 
@@ -777,37 +1102,32 @@ void MainWindow::on_btnPushBlock_clicked()
 
 void MainWindow::on_tboxLoad_clicked()
 {
-    GeNode<ArchiveHandle*>* Fl = Artist->Get_Archive_By_Name("MarioBros");
-
-    //Fl->Data->Cnv->SetCanvasLimits(-3,4,-9,5);
-    Fl->Data->Cnv->SetCanvasLimits(-3,1,-2,4);
-
-    ArrayRange* I = Fl->Data->Cnv->Get_I_Range();
-    ArrayRange* J = Fl->Data->Cnv->Get_J_Range();
-
-    Load_Canvas(I,J);
-
-    ui->spinBoxSup_Fl->setValue(-2);
-    ui->spinBoxSup_Cl->setValue(-1);
-
-    ui->spinBoxInf_Fl->setValue(-1);
-    ui->spinBoxInf_Cl->setValue(1);
-
-    //Artist->Get_Archive_By_Name("MarioBros")->Data->Cnv->SetCanvasLimits(-3,4,-9,5);
-
-    //Artist->Get_Archive_By_Name("MarioBros")->Data->Cnv->I->Sup
-    //Load_Canvas(new ArrayRange(-3,4),new ArrayRange(-9,5));
+    QString Nm = ui->tboxNombre->text();
+    //Artist->Get_Archive_By_Name(Nm)->Data->Cnv->LoadFrom_JSon();
 }
 
 void MainWindow::on_btnRender_clicked(){
-    GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name("MarioBros");
+    QString FlName = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* WFile = Artist->Get_Archive_By_Name(FlName);
     WFile->Data->Cnv->Render();
 }
 
 void MainWindow::on_btnSaveCanvas_clicked(){
-    if(ui->listActions->count() > 0){
-        Artist->Get_Archive_By_Name("MarioBros")->Data->Cnv->Build_JSon_Canvas();
-    }
+    Show_Message("Info","L I E N Z O","Archivo Guardado Exitosamente");
+    QString FlName = ui->tboxNombre->text();
+    Artist->Get_Archive_By_Name(FlName)->Data->Cnv->Build_JSon_Canvas();
+    QString JsUrl = ui->tboxURL->text();
+    QString JsContent = Artist->Get_Archive_By_Name(FlName)->Data->Cnv->New_JSonContent;
+    Save_File(FlName,JsUrl,JsContent);
+
+    Clean_Canvas();
+
+    ui->tabManager->setTabEnabled(0,true);
+    ui->tabManager->setTabEnabled(3,false);
+    ui->tabManager->setCurrentIndex(0);
+    Archive_Manager_FirstUse();
+
+
 }
 
 void MainWindow::on_btnFetch_JSon_clicked(){
@@ -830,18 +1150,6 @@ void MainWindow::on_tboxNombre_textChanged(const QString &arg1)
     QString Nm = ui->tboxNombre->text().trimmed();
     ui->tboxURL->setText("JSon_DIR/"+Nm+".json");
 }
-
-//void MainWindow::on_pushButton_clicked()
-//{
-    //Artist->
-    //ArrayRange* III = new ArrayRange();
-    //ArrayRange* JJJ = new ArrayRange();
-    //AskLimits* Ak = new AskLimits(0,III,JJJ);
-    //Ak->show();
-
-    //III->SetSize();
-    //JJJ->SetSize();
-//}
 
 void MainWindow::on_btnAddPermiso_clicked(){
 
@@ -923,4 +1231,439 @@ void MainWindow::on_btnDelete_clicked(){
 
 void MainWindow::on_btnChangePermisos_clicked(){
     Update_Permission(ui->tboxNombre->text());
+}
+
+void MainWindow::on_btnIMG_clicked()
+{
+    Image_State();
+}
+
+void MainWindow::on_btnPR_clicked()
+{
+    Parragraph_State();
+}
+
+void MainWindow::on_btnVIN_clicked()
+{
+    Vinieta_State();
+}
+
+void MainWindow::on_tboxVin_returnPressed()
+{
+    if(ui->tboxVin->text().trimmed() != ""){
+        QString Vn = ui->tboxVin->text();
+        ui->listboxVin->insertItem(0,Vn);
+        ui->tboxVin->setText("");
+    }
+}
+
+void MainWindow::on_listboxVin_itemDoubleClicked(QListWidgetItem *item)
+{
+    ui->listboxVin->removeItemWidget(item);
+    delete item;
+}
+
+void MainWindow::on_btnDirIMG_clicked()
+{
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    QString Fl_Name = QFileDialog::getOpenFileName(NULL, tr("I M A G E   P I C K E R"));
+
+    if(Fl_Name.isEmpty())
+    return;
+
+    QFile Fl(Fl_Name);
+
+    if (!Fl.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QByteArray Fl_Base = Fl.readAll();
+
+    ui->tboxIMG->setText(Fl_Name);
+    QString IMG_64 = Doc_Emu->PNG_to_Base64(Fl_Name);
+    ui->tboxContent->setText(IMG_64);
+
+}
+
+void MainWindow::on_btnADD_clicked()
+{
+
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    QString Titulo = ui->tboxTitle->text();
+    QString Contenido = ui->tboxContent->toPlainText();
+    QString Fl_Path = ui->tboxIMG->text();
+
+    bool Up = false;
+
+    //(^< ............ ............ ............ V I N
+    int Nv = ui->listboxVin->count();
+    QStringList* Vn = new QStringList();
+    if(Nv > 0){
+        int cnt = 0;
+        while(cnt < Nv){
+            QListWidgetItem* itm = ui->listboxVin->item(cnt);
+            Vn->push_back(itm->text());
+            cnt++;
+        }
+    }
+
+    DocData* Dt = new DocData();
+    TNode* Tmp = new TNode();
+
+    //(^< ............ ............ ............ P A R R A F O
+    if(!ui->btnPR->isEnabled()){
+
+        if(ui->tboxTitle->text().trimmed() != "" && ui->tboxContent->toPlainText().trimmed() != ""){
+            Dt->Titulo = Titulo;
+            Dt->Contenido = Contenido;
+            Dt->Tipo_Seccion = "párrafo";
+
+            TNode* Tmp = new TNode();
+            Tmp->Info = Dt;
+
+            Dt->Tipo_Seccion = "párrafo";
+            //Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+            if(SelectedNode != NULL){
+                if(SelectedNode->TreeList != NULL){
+                    SelectedNode->TreeList->EndInsert(Tmp);
+                }else{
+                    SelectedNode->TreeList = new GenList<TNode*>();
+                    SelectedNode->TreeList->EndInsert(Tmp);
+                }
+            }
+            else{
+                Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+            }
+            Up = true;
+        }
+    }
+
+    //(^< ............ ............ ............ I M A G E N
+    if(!ui->btnIMG->isEnabled()){
+
+        Dt->Titulo = "Imagen: ";
+        Dt->Titulo.append(Titulo);
+        Dt->Tipo_Seccion = "imagen";
+        Dt->Contenido = Contenido;
+
+        Tmp->Info = Dt;
+
+        /*
+        if(SelectedNode != NULL){
+            if(SelectedNode->TreeList != NULL){
+                SelectedNode->TreeList->EndInsert(Tmp);
+            }else{
+                SelectedNode->TreeList = new GenList<TNode*>();
+                SelectedNode->TreeList->EndInsert(Tmp);
+            }
+        }
+        else{
+            Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+        }
+        */
+        //Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+        if(SelectedNode != NULL && SelectedNode->Info->Tipo_Seccion == "párrafo"){
+            if(SelectedNode->TreeList != NULL){
+                SelectedNode->TreeList->EndInsert(Tmp);
+            }else{
+                SelectedNode->TreeList = new GenList<TNode*>();
+                SelectedNode->TreeList->EndInsert(Tmp);
+            }
+        }
+        else{
+            Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+        }
+
+
+        Up = true;
+
+    }
+
+    //(^< ............ ............ ............ V I N I E T A S
+    if(!ui->btnVIN->isEnabled()){
+
+        if(ui->tboxTitle->text().trimmed() != "" && ui->listboxVin->count() > 0){
+            Dt->Tipo_Seccion = "viñetas";
+
+            int cnt = 0;
+            int Sz = Vn->size();
+
+            if(Sz > 0){
+                Tmp->TreeList = new GenList<TNode*>();
+            }
+
+            while(cnt < Sz){
+                DocData* St = new DocData();
+                St->Titulo = "";
+                St->Tipo_Seccion = "viñetas";
+                St->Contenido = Vn->at(cnt);
+
+                TNode* NVin = new TNode();
+                NVin->Info = St;
+                NVin->TreeList = NULL;
+
+                Tmp->TreeList->EndInsert(NVin);
+                cnt++;
+            }
+
+            Dt->Titulo = Titulo;
+            Dt->Tipo_Seccion = "viñetas";
+            Dt->Contenido = "";
+
+            Tmp->Info = Dt;
+
+            if(SelectedNode != NULL && SelectedNode->Info->Tipo_Seccion == "párrafo"){
+                if(SelectedNode->TreeList != NULL){
+                    SelectedNode->TreeList->EndInsert(Tmp);
+                }else{
+                    SelectedNode->TreeList = new GenList<TNode*>();
+                    SelectedNode->TreeList->EndInsert(Tmp);
+                }
+            }
+            else{
+                Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+            }
+            //Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+            /*
+            if(SelectedNode != NULL){
+                SelectedNode->TreeList->EndInsert(Tmp);
+            }
+            else{
+                Doc_Emu->Arbolito->TopLevel_ChildInsert(Tmp);
+            }
+            */
+
+            Up = true;
+        }
+
+    }
+
+    if(Up){
+        Clean_DocEdit();
+        SelectedNode = NULL;
+        Doc_Emu->Arbolito->SetNode_ID();
+        Doc_Emu->Arbolito->SetNode_Levels();
+        Doc_Emu->Arbolito->UpdateTreeView();
+        ui->tvDocTree->expandAll();
+    }
+}
+
+void MainWindow::on_btnPDF_clicked()
+{
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    if(Doc_Emu->Arbolito->RT != NULL){
+        Doc_Emu->GeneratePDF();
+    }
+}
+
+void MainWindow::on_btnTreeIMG_clicked()
+{
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    if(Doc_Emu->Arbolito->RT != NULL){
+        Doc_Emu->Arbolito->GraphTree();
+    }
+}
+
+void MainWindow::on_tvDocTree_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+
+    Clean_DocEdit();
+
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    bool Ps = false;
+
+    QString T_ID = item->text(1);
+    TNode* Rw = Doc_Emu->Arbolito->GetNodeBy_ID(T_ID.toInt());
+    SelectedNode = Rw;
+
+    QString Titulo = Rw->Info->Titulo;
+    QString Tipo_Seccion = Rw->Info->Tipo_Seccion;
+    QString Contenido = Rw->Info->Contenido;
+
+    if(Tipo_Seccion == "párrafo"){
+        //Clean_DocEdit();
+        Parragraph_State();
+        ui->tboxTitle->setText(Titulo);
+        ui->tboxContent->setText(Contenido);
+        Ps = true;
+    }
+    else if(Tipo_Seccion == "imagen"){
+        //
+        Clean_DocEdit();
+        Image_State();
+        Titulo.remove(0,8);
+        ui->tboxTitle->setText(Titulo);
+        ui->tboxContent->setText(Contenido);
+        ui->tboxContent->setReadOnly(true);
+        Ps = true;
+    }
+    else if(Titulo == "" && Tipo_Seccion == "viñetas"){
+        Clean_DocEdit();
+        ui->tboxTitle->setText(Contenido);
+        Ps = true;
+    }
+    else{
+        Clean_DocEdit();
+        ui->tboxTitle->setText(Titulo);
+        Ps = true;
+    }
+
+
+    if(Ps){
+
+        if(SelectedNode->Info->Tipo_Seccion != "párrafo"){
+            ui->btnAddSubsection->setEnabled(false);
+        }
+        else{
+            ui->btnAddSubsection->setEnabled(true);
+        }
+
+
+        ui->btnDeleteNode->setEnabled(true);
+
+        ui->btnADD->setEnabled(false);
+        ui->btnUP->setEnabled(true);
+    }
+}
+
+void MainWindow::on_btnUseEditor_clicked()
+{
+    QString Fln = ui->tboxNombre->text();
+    QString Js_Url = ui->tboxURL->text();
+    QString Tp = ui->comboxTipo->currentText();
+    Get_File_Content(Fln,Js_Url,"Edit",Tp);
+}
+
+void MainWindow::on_btnViewPDF_clicked()
+{
+    QString Fln = ui->tboxNombre->text();
+    QString Js_Url = ui->tboxURL->text();
+    QString Tp = ui->comboxTipo->currentText();
+    Get_File_Content(Fln,Js_Url,"View",Tp);
+}
+
+void MainWindow::on_tboxColor_returnPressed()
+{
+
+}
+
+void MainWindow::on_btnUP_clicked()
+{
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    QString Titulo = SelectedNode->Info->Titulo;
+    QString Tipo_Seccion = SelectedNode->Info->Tipo_Seccion;
+    QString Contenido = SelectedNode->Info->Contenido;
+
+
+    if(Tipo_Seccion == "párrafo"){
+        SelectedNode->Info->Titulo = ui->tboxTitle->text();
+        SelectedNode->Info->Contenido = ui->tboxContent->toPlainText();
+    }
+
+    if(Tipo_Seccion == "imagen"){
+        QString IMG_Title = "Imagen: ";
+        IMG_Title.append(ui->tboxTitle->text());
+        SelectedNode->Info->Titulo = IMG_Title;
+        SelectedNode->Info->Contenido = ui->tboxContent->toPlainText();
+    }
+
+    if(Titulo == "" && Tipo_Seccion == "viñetas"){
+        SelectedNode->Info->Contenido = ui->tboxTitle->text();
+    }
+
+    if(Titulo != "" && Tipo_Seccion == "viñetas"){
+        SelectedNode->Info->Titulo = ui->tboxTitle->text();
+    }
+
+    DocEdit_FirstUse();
+    //Doc_Emu->Arbolito->Tv->repaint();
+    Doc_Emu->Arbolito->UpdateTreeView();
+    Doc_Emu->Arbolito->Tv->expandAll();
+}
+
+void MainWindow::on_btnDeleteNode_clicked()
+{
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    int ID_Selected = SelectedNode->Info->ID;
+    Doc_Emu->Arbolito->DeleteNodeBy_ID(ID_Selected);
+
+    Doc_Emu->Arbolito->UpdateTreeView();
+    Doc_Emu->Arbolito->Tv->expandAll();
+    DocEdit_FirstUse();
+
+}
+
+void MainWindow::on_btnAddSubsection_clicked(){
+
+    if(ui->tvDocTree->currentItem() != NULL && SelectedNode != NULL){
+        ui->btnAddSubsection->setEnabled(false);
+        Parragraph_State();
+        ui->btnADD->setEnabled(true);
+        ui->btnUP->setEnabled(false);
+    }
+}
+
+void MainWindow::on_btnSaveDoc_clicked()
+{
+    Show_Message("Info","D O C U M E N T O","Archivo Guardado Exitosamente");
+
+    QString FlName_Dc = ui->tboxNombre->text();
+    GeNode<ArchiveHandle*>* FI_l = Artist->Get_Archive_By_Name(FlName_Dc);
+    DocumentHandle* Doc_Emu = FI_l->Data->Dc;
+
+    Doc_Emu->Build_JSon_Document();
+
+    QString JsUrl = ui->tboxURL->text();
+    QString JsContent = Doc_Emu->New_JSonContent;
+    ui->tboxJSonDocEdit->setText(JsContent);
+
+
+    Save_File(FlName_Dc,JsUrl,JsContent);
+
+
+    Clean_DocEdit();
+
+    ui->tabManager->setTabEnabled(0,true);
+    ui->tabManager->setTabEnabled(1,false);
+    ui->tabManager->setCurrentIndex(0);
+    Archive_Manager_FirstUse();
+
+
+}
+
+void MainWindow::on_btnDEL_clicked()
+{
+
+}
+
+void MainWindow::on_actionLog_Out_triggered()
+{
+    //QString Sl = "Log_Out";
+    //Sl.append("#");
+    //socketSend(Sl);
+
+    Client_Log* Cl = new Client_Log();
+    Cl->show();
+    this->hide();
+
 }
